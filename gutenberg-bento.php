@@ -37,5 +37,7 @@
  */
 
 require_once __DIR__ . '/inc/namespace.php';
+require_once __DIR__ . '/inc/lightbox-gallery/namespace.php';
 
 Google\Gutenberg_Bento\boostrap();
+Google\Gutenberg_Bento\Lightbox_Gallery\boostrap();
