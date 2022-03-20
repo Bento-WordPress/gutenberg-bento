@@ -1,0 +1,47 @@
+{
+	"apiVersion": 2,
+	"name": "gutenberg-bento/socialshare",
+	"title": "Social Share",
+	"category": "gutenberg-bento-blocks",
+	"description": "Displays a sharing button for social platforms or system share.",
+	"keywords": [ "social", "share", "social networks" ],
+	"textdomain": "default",
+	"attributes": {
+		"email": {
+			"type": "boolean",
+			"default": false
+		},
+		"facebook": {
+			"type": "boolean",
+			"default": false
+		},
+		"twitter": {
+			"type": "boolean",
+			"default": true
+		},
+		"linkedin": {
+			"type": "boolean",
+			"default": true
+		},
+		"pinterest": {
+			"type": "boolean",
+			"default": true
+		},
+		"tumblr": {
+			"type": "boolean",
+			"default": true
+		},
+		"whatsapp": {
+			"type": "boolean",
+			"default": true
+		},
+		"line": {
+			"type": "boolean",
+			"default": true
+		}
+	},
+	"viewScript": "file:./socialshare.view.js",
+	"editorScript": "file:./socialshare.js",
+	"editorStyle": "file:./socialshare.css",
+	"style": ["file:./socialshare.view.css", "bento-base-socialshare"]
+}
