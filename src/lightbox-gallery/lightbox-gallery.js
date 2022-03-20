@@ -1,6 +1,11 @@
 import { addFilter } from '@wordpress/hooks';
 import { InspectorControls } from '@wordpress/block-editor';
-import { PanelBody, ToggleControl } from '@wordpress/components';
+import {
+	Panel,
+	PanelBody,
+	PanelRow,
+	ToggleControl,
+} from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -23,19 +28,24 @@ function addLightBoxGallerySupport(BlockEdit) {
 				<BlockEdit {...props} />
 				{'core/gallery' === name && (
 					<InspectorControls>
-						<PanelBody>
-							<ToggleControl
-								label={__(
-									'Add lightbox effect',
-									'gutenberg-bento'
-								)}
-								checked={bentoLightbox}
-								onChange={() => {
-									setAttributes({
-										bentoLightbox: !bentoLightbox,
-									});
-								}}
-							/>
+						<PanelBody
+							title={__('Lightbox', 'gutenberg-bento')}
+							initialOpen={true}
+						>
+							<PanelRow>
+								<ToggleControl
+									label={__(
+										'Add lightbox effect',
+										'gutenberg-bento'
+									)}
+									checked={bentoLightbox}
+									onChange={() => {
+										setAttributes({
+											bentoLightbox: !bentoLightbox,
+										});
+									}}
+								/>
+							</PanelRow>
 						</PanelBody>
 					</InspectorControls>
 				)}

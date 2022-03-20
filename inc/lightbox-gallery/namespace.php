@@ -30,10 +30,6 @@ const BENTO_RUNTIME_SCRIPT_HANDLE          = 'bento-runtime';
 const BENTO_LIGHTBOX_GALLERY_SCRIPT_HANDLE = 'bento-lightbox-gallery';
 const BENTO_LIGHTBOX_GALLERY_VERSION       = '1.0';
 
-// @todo Maybe these should be obtained from block.json directly?
-const BLOCK_STYLE_HANDLE       = 'gutenberg-bento-lightbox-gallery';
-const BLOCK_VIEW_SCRIPT_HANDLE = 'gutenberg-bento-lightbox-gallery-view';
-
 /**
  * Bootstraps the plugin.
  *
@@ -46,6 +42,7 @@ function boostrap() {
 	add_filter( 'wp_kses_allowed_html', __NAMESPACE__ . '\filter_kses_allowed_html' );
 
 	add_filter( 'render_block', __NAMESPACE__ . '\filter_gallery_block', 10, 2 );
+	add_filter( 'block_type_metadata_settings', __NAMESPACE__ . '\filter_block_type_metadata_settings', 10, 2 );
 }
 
 /**
@@ -149,21 +146,20 @@ function register_lightbox_gallery_assets() {
 	$edit_version      = isset( $edit_asset['version'] ) ? $edit_asset['version'] : false;
 	$edit_dependencies = isset( $edit_asset['dependencies'] ) ? $edit_asset['dependencies'] : array();
 
-	$view_asset_file     = plugin_dir_path( __DIR__ ) . 'build/lightbox-gallery.view.asset.php';
-	$view_asset          = is_readable( $view_asset_file ) ? require $view_asset_file : array();
-	$view_version        = isset( $view_asset['version'] ) ? $view_asset['version'] : false;
-	$view_dependencies   = isset( $view_asset['dependencies'] ) ? $view_asset['dependencies'] : array();
-	$view_dependencies[] = BENTO_LIGHTBOX_GALLERY_SCRIPT_HANDLE;
-
 	// Both used only in editor.
-	wp_register_style( 'gutenberg-bento-lightbox-gallery-edit', plugin_dir_url( dirname( __DIR__ ) ) . 'build/lightbox-gallery.css', array(), $edit_version );
-	wp_register_script( 'gutenberg-bento-lightbox-gallery-edit', plugin_dir_url( dirname( __DIR__ ) ) . 'build/lightbox-gallery.js', $edit_dependencies, $edit_version );
-
-	// Used in editor + frontend.
-	wp_register_style( BLOCK_STYLE_HANDLE, plugin_dir_url( __DIR__ ) . 'build/lightbox-gallery.view.css', array( BENTO_LIGHTBOX_GALLERY_SCRIPT_HANDLE ), $view_version );
-
-	// Used only on frontend.
-	wp_register_script( BLOCK_VIEW_SCRIPT_HANDLE, plugin_dir_url( __DIR__ ) . 'build/lightbox-gallery.view.js', $view_dependencies, $view_version );
+	wp_register_style(
+		'gutenberg-bento-lightbox-gallery-edit',
+		plugin_dir_url( dirname( __DIR__ ) ) . 'build/lightbox-gallery.css',
+		array(),
+		$edit_version
+	);
+	wp_register_script(
+		'gutenberg-bento-lightbox-gallery-edit',
+		plugin_dir_url( dirname( __DIR__ ) ) . 'build/lightbox-gallery.js',
+		$edit_dependencies,
+		$edit_version,
+		true
+	);
 }
 
 /**
@@ -178,7 +174,11 @@ function filter_gallery_block( $block_content, $block ) {
 		return $block_content;
 	}
 
-	if ( 'none' !== $block['attrs']['linkTo']) {
+	if ( 'none' !== $block['attrs']['linkTo'] ) {
+		return $block_content;
+	}
+
+	if ( ! $block['attrs']['bentoLightbox'] ) {
 		return $block_content;
 	}
 
@@ -190,4 +190,24 @@ function filter_gallery_block( $block_content, $block ) {
 	wp_enqueue_style( BENTO_LIGHTBOX_GALLERY_SCRIPT_HANDLE );
 
 	return $block_content;
+}
+
+/**
+ * Filter gallery block to add bentoLightbox attribute.
+ *
+ * @param array $settings Array of determined settings for registering a block type.
+ * @param array $metadata Metadata loaded from the block.json file.
+ * @return array Filtered settings.
+ */
+function filter_block_type_metadata_settings( $settings, $metadata ) {
+	if ( 'core/gallery' !== $metadata['name'] ) {
+		return $settings;
+	}
+
+	$settings['attributes']['bentoLightbox'] = array(
+		'type'    => 'boolean',
+		'default' => false,
+	);
+
+	return $settings;
 }
