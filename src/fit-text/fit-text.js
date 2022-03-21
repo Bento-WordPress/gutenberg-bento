@@ -6,22 +6,20 @@ import { alignJustify as icon } from '@wordpress/icons';
 import metadata from './block.json';
 import edit from './edit';
 import save from './save';
-
-const { name } = metadata;
-
-export { metadata, name };
+import transforms from './transforms';
 
 export const settings = {
 	icon,
 	example: {
 		attributes: {
-			fittedText: '',
+			content: 'Love all, trust a few, do wrong to none.',
 			minFontSize: '10px',
 			maxFontSize: '200px',
 		},
 	},
 	edit,
 	save,
+	transforms,
 };
 
-registerBlockType('gutenberg-bento/fit-text', settings);
+registerBlockType(metadata.name, settings);
