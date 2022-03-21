@@ -1,11 +1,14 @@
+import classnames from 'classnames';
 import { BentoFitText } from '@bentoproject/fit-text/react';
 import '@bentoproject/fit-text/styles.css';
 import './view.css';
 
 import {
+	AlignmentToolbar,
+	BlockControls,
+	InspectorControls,
 	RichText,
 	useBlockProps,
-	InspectorControls,
 } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
 import {
@@ -18,9 +21,14 @@ import { useState, useEffect } from '@wordpress/element';
 
 import './edit.css';
 
-function FitTextEdit(props) {
-	const { attributes, setAttributes } = props;
-	const { fittedText, minFontSize, maxFontSize, height = 200 } = attributes;
+function FitTextEdit({ attributes, setAttributes }) {
+	const {
+		content,
+		minFontSize,
+		maxFontSize,
+		height = 50,
+		textAlign,
+	} = attributes;
 
 	const [localHeight, setLocalHeight] = useState(height);
 
@@ -28,22 +36,34 @@ function FitTextEdit(props) {
 		setAttributes({ height: localHeight });
 	}, [localHeight]);
 
+	const blockProps = useBlockProps({
+		className: classnames({
+			[`has-text-align-${textAlign}`]: textAlign,
+		}),
+	});
+
 	function setMinFontSize(fontSize) {
-		props.setAttributes({ minFontSize: fontSize });
+		setAttributes({ minFontSize: fontSize });
 	}
 
 	function setMaxFontSize(fontSize) {
-		props.setAttributes({ maxFontSize: fontSize });
+		setAttributes({ maxFontSize: fontSize });
 	}
 
-	function setFittedText(text) {
-		props.setAttributes({ fittedText: text });
+	function setContent(nextValue) {
+		setAttributes({ content: nextValue });
 	}
-
-	const blockProps = useBlockProps();
 
 	return (
 		<>
+			<BlockControls>
+				<AlignmentToolbar
+					value={textAlign}
+					onChange={(nextAlign) => {
+						setAttributes({ textAlign: nextAlign });
+					}}
+				/>
+			</BlockControls>
 			<InspectorControls>
 				<PanelBody title={__('Fit-Text Settings', 'gutenberg-bento')}>
 					<UnitControl
@@ -76,7 +96,7 @@ function FitTextEdit(props) {
 			</InspectorControls>
 			<div {...blockProps}>
 				<ResizableBox
-					minHeight={200}
+					minHeight={50}
 					enable={{ bottom: true, right: false }}
 					onResizeStop={(event, direction, elt, delta) => {
 						setLocalHeight(
@@ -96,7 +116,13 @@ function FitTextEdit(props) {
 							10
 						)}
 					>
-						<RichText value={fittedText} onChange={setFittedText} />
+						<RichText
+							identifier="content"
+							value={content}
+							onChange={setContent}
+							aria-label={__('Fitted Text', 'gutenberg-bento')}
+							placeholder={__('Write text…', 'gutenberg-bento')}
+						/>
 					</BentoFitText>
 				</ResizableBox>
 			</div>

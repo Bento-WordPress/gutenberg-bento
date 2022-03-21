@@ -32,6 +32,10 @@ Specifically:
 
 Uses [Bento Accordion](https://bentojs.dev/components/bento-accordion/) with `InnerBlocks`.
 
+<img width="1344" alt="Accordion in the Editor" src="https://user-images.githubusercontent.com/841956/159233337-0aa3641d-bd92-4d1b-8312-f61dedb0b7d9.png">
+
+<img width="774" alt="Accordion on the Frontend" src="https://user-images.githubusercontent.com/841956/159233382-e854d2aa-2c90-4f7a-94ae-fe69d9e626f8.png">
+
 ### Carousel Block
 
 Uses [Bento Carousel](https://bentojs.dev/components/bento-carousel/) with `InnerBlocks`.
@@ -109,5 +113,7 @@ This project was built during the [CloudFest 2022 Hackathon](https://www.cloudfe
 * [Greg Ziółkowski](https://github.com/gziolo)
 * [Héctor Prieto](https://github.com/priethor)
 * [Jessica Lyschik](https://github.com/luminuu)
+
+![IMG_2668](https://user-images.githubusercontent.com/83631/159237216-7df94356-2fc4-47ca-9b54-92df48e764db.jpg)
 
 It is based on an original early prototype built by [Pascal Birchler](https://github.com/swissspidy).

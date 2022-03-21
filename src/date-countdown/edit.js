@@ -83,7 +83,7 @@ function CountdownEdit(props) {
 						onChange={toggleWhenEnded}
 					/>
 					<PanelRow ref={anchorRef}>
-						<span>{__('Publish', 'gutenberg-bento')}</span>
+						<span>{__('Date', 'gutenberg-bento')}</span>
 						<Dropdown
 							popoverProps={{ anchorRef: anchorRef.current }}
 							position="bottom left"
