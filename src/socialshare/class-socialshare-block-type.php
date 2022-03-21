@@ -5,20 +5,15 @@
  * @package   Google\Gutenberg_Bento
  */
 
-namespace Google\Gutenberg_Bento;
+namespace Gutenberg_Bento;
 
 /**
  * Class SocialShare_Block_type
  */
 class SocialShare_Block_Type {
 
-	const BENTO_RUNTIME_SCRIPT_HANDLE          = 'bento-runtime';
-	const BENTO_BASE_SOCIALSHARE_SCRIPT_HANDLE = 'bento-socialshare';
+	const BENTO_BASE_SOCIALSHARE_SCRIPT_HANDLE = 'bento-social-share';
 	const BENTO_BASE_SOCIALSHARE_VERSION       = '1.0';
-
-	// @todo Maybe these should be obtained from block.json directly?
-	const BLOCK_STYLE_HANDLE       = 'gutenberg-bento-socialshare-style';
-	const BLOCK_VIEW_SCRIPT_HANDLE = 'gutenberg-bento-socialshare-view-script';
 
 	/**
 	 * Calls the initialization function.
@@ -35,7 +30,6 @@ class SocialShare_Block_Type {
 	protected function init_hooks() {
 		add_action( 'init', array( $this, 'register_bento_assets' ) );
 		add_action( 'init', array( $this, 'register_socialshare_block_type' ) );
-		add_action( 'enqueue_block_assets', array( $this, 'unregister_asset_dependencies_on_amp' ), 9 ); // The 9 to before wp_enqueue_registered_block_scripts_and_styles().
 		add_filter( 'wp_kses_allowed_html', array( $this, 'filter_kses_allowed_html' ) );
 	}
 
@@ -49,26 +43,22 @@ class SocialShare_Block_Type {
 	 */
 	public function register_bento_assets() {
 
-		$src    = sprintf( 'https://cdn.ampproject.org/v0/bento-socialshare-%s.js', self::BENTO_BASE_SOCIALSHARE_VERSION );
-		$script = wp_scripts()->query( self::BENTO_BASE_SOCIALSHARE_SCRIPT_HANDLE );
-		if ( $script ) {
-			// Make sure that 1.0 (Bento) is used instead of 0.1 (latest).
-			$script->src = $src;
-		} else {
-			wp_register_script( self::BENTO_BASE_SOCIALSHARE_SCRIPT_HANDLE, $src, array( self::BENTO_RUNTIME_SCRIPT_HANDLE ), null, true );
-		}
+		wp_register_script(
+			self::BENTO_BASE_SOCIALSHARE_SCRIPT_HANDLE,
+			sprintf( 'https://cdn.ampproject.org/v0/bento-social-share-%s.js', self::BENTO_BASE_SOCIALSHARE_VERSION ),
+			array( Blocks::BENTO_RUNTIME_SCRIPT_HANDLE ),
+			null,
+			true
+		);
 
-		// At the moment the AMP plugin does not register styles for Bento components, but this could change with <https://github.com/ampproject/amp-wp/pull/6353>.
-		$src   = sprintf( 'https://cdn.ampproject.org/v0/bento-socialshare-%s.css', self::BENTO_BASE_SOCIALSHARE_VERSION );
-		$style = wp_styles()->query( self::BENTO_BASE_SOCIALSHARE_SCRIPT_HANDLE );
-		if ( $style ) {
-			// Make sure that 1.0 (Bento) is used instead of 0.1 (latest).
-			$style->src = $src;
-		} else {
-			wp_register_style( self::BENTO_BASE_SOCIALSHARE_SCRIPT_HANDLE, $src, array(), null, false );
-		}
+		wp_register_style(
+			self::BENTO_BASE_SOCIALSHARE_SCRIPT_HANDLE,
+			sprintf( 'https://cdn.ampproject.org/v0/bento-social-share-%s.css', self::BENTO_BASE_SOCIALSHARE_VERSION ),
+			array(),
+			null,
+			false
+		);
 
-		// TODO: We need to test this with self hosted files.
 		/**
 		 * Filters whether to enqueue self-hosted Bento components instead of using the CDN.
 		 *
@@ -77,22 +67,18 @@ class SocialShare_Block_Type {
 		$self_host = (bool) apply_filters( 'gutenberg_bento_self_host', false );
 
 		if ( $self_host ) {
-			$web_component_asset_file = GUTENBERG_BENTO_BLOCKS_ABSPATH . 'build/bento-socialshare.asset.php';
+			$web_component_asset_file = plugin_dir_path( __DIR__ ) . 'build/socialshare/socialshare.asset.php';
 			$web_component_asset      = is_readable( $web_component_asset_file ) ? require $web_component_asset_file : array();
 			$web_component_version    = isset( $web_component_asset['version'] ) ? $web_component_asset['version'] : false;
 
-			$style = wp_styles()->query( self::BENTO_BASE_SOCIALSHARE_SCRIPT_HANDLE );
-			if ( $style ) {
-				$style->src = GUTENBERG_BENTO_BLOCKS_ABSPATH . 'build/bento-socialshare.css';
-				$style->ver = $web_component_version;
-			}
-			$script = wp_scripts()->query( self::BENTO_BASE_SOCIALSHARE_SCRIPT_HANDLE );
+			$script = wp_scripts()->query( self::BENTO_DATE_COUNTDOWN_SCRIPT_HANDLE );
 			if ( $script ) {
-				$script->src  = GUTENBERG_BENTO_BLOCKS_ABSPATH . 'build/socialshare/bento-socialshare.js';
+				$script->src  = plugin_dir_url( __DIR__ ) . 'build/socialshare/socialshare.js';
 				$script->ver  = $web_component_version;
 				$script->deps = array(); // bento.js runtime is not needed when self-hosting.
 			}
 		}
+
 	}
 
 	/**
@@ -101,33 +87,7 @@ class SocialShare_Block_Type {
 	 * @return void
 	 */
 	public function register_socialshare_block_type() {
-		register_block_type(
-			GUTENBERG_BENTO_BLOCKS_ABSPATH . '/build/socialshare/block.json'
-		);
-
-		$script = wp_scripts()->query( self::BLOCK_VIEW_SCRIPT_HANDLE );
-		if ( $script ) {
-			$script->deps = array_merge( $script->deps, array( self::BENTO_RUNTIME_SCRIPT_HANDLE, self::BENTO_BASE_SOCIALSHARE_SCRIPT_HANDLE ) );
-			$script->args = 1;
-		}
-
-	}
-
-	/**
-	 * When on AMP pages, prevent the view script and other scripts/styles from being printed. These are handled by AMP.
-	 *
-	 * @return void
-	 */
-	public function unregister_asset_dependencies_on_amp() {
-		// Note the is_amp() function can only be called at or after the `wp` action.
-		if ( ! $this->is_amp() ) {
-			return;
-		}
-
-		$style = wp_styles()->query( self::BLOCK_STYLE_HANDLE );
-		if ( $style ) {
-			$style->deps = array_diff( $style->deps, array( self::BENTO_BASE_SOCIALSHARE_SCRIPT_HANDLE ) );
-		}
+		register_block_type( GUTENBERG_BENTO_BLOCKS_ABSPATH . '/build/socialshare/block.json' );
 	}
 
 	/**
@@ -139,8 +99,8 @@ class SocialShare_Block_Type {
 	 * @return array Filtered tags.
 	 */
 	public function filter_kses_allowed_html( $tags ) {
-		$tags['bento-socialshare'] = array_merge(
-			isset( $tags['bento-socialshare'] ) ? $tags['bento-socialshare'] : array(),
+		$tags['bento-social-share'] = array_merge(
+			isset( $tags['bento-social-share'] ) ? $tags['bento-social-share'] : array(),
 			array_fill_keys(
 				array(
 					'type',
@@ -149,14 +109,5 @@ class SocialShare_Block_Type {
 			)
 		);
 		return $tags;
-	}
-
-	/**
-	 * Determines whether the current request is for an AMP document.
-	 *
-	 * @return bool Whether the current request is for an AMP document or not.
-	 */
-	public function is_amp() {
-		return ( function_exists( 'amp_is_request' ) && amp_is_request() );
 	}
 }
