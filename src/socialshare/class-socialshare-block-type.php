@@ -13,7 +13,7 @@ namespace Google\Gutenberg_Bento;
 class SocialShare_Block_Type {
 
 	const BENTO_RUNTIME_SCRIPT_HANDLE          = 'bento-runtime';
-	const BENTO_BASE_SOCIALSHARE_SCRIPT_HANDLE = 'bento-base-socialshare';
+	const BENTO_BASE_SOCIALSHARE_SCRIPT_HANDLE = 'bento-socialshare';
 	const BENTO_BASE_SOCIALSHARE_VERSION       = '1.0';
 
 	// @todo Maybe these should be obtained from block.json directly?
@@ -42,14 +42,14 @@ class SocialShare_Block_Type {
 	/**
 	 * Registers the scripts and styles for Bento components.
 	 *
-	 * Note that 'amp-runtime' and 'bento-base-socialshare' are scripts registered by the AMP plugin. The Bento versions aren't
+	 * Note that 'amp-runtime' and 'bento-socialshare' are scripts registered by the AMP plugin. The Bento versions aren't
 	 * currently registered, so that is why this function needs to run currently on AMP pages.
 	 *
 	 * @return void
 	 */
 	public function register_bento_assets() {
 
-		$src    = sprintf( 'https://cdn.ampproject.org/v0/bento-base-socialshare-%s.js', self::BENTO_BASE_SOCIALSHARE_VERSION );
+		$src    = sprintf( 'https://cdn.ampproject.org/v0/bento-socialshare-%s.js', self::BENTO_BASE_SOCIALSHARE_VERSION );
 		$script = wp_scripts()->query( self::BENTO_BASE_SOCIALSHARE_SCRIPT_HANDLE );
 		if ( $script ) {
 			// Make sure that 1.0 (Bento) is used instead of 0.1 (latest).
@@ -59,7 +59,7 @@ class SocialShare_Block_Type {
 		}
 
 		// At the moment the AMP plugin does not register styles for Bento components, but this could change with <https://github.com/ampproject/amp-wp/pull/6353>.
-		$src   = sprintf( 'https://cdn.ampproject.org/v0/bento-base-socialshare-%s.css', self::BENTO_BASE_SOCIALSHARE_VERSION );
+		$src   = sprintf( 'https://cdn.ampproject.org/v0/bento-socialshare-%s.css', self::BENTO_BASE_SOCIALSHARE_VERSION );
 		$style = wp_styles()->query( self::BENTO_BASE_SOCIALSHARE_SCRIPT_HANDLE );
 		if ( $style ) {
 			// Make sure that 1.0 (Bento) is used instead of 0.1 (latest).
@@ -77,18 +77,18 @@ class SocialShare_Block_Type {
 		$self_host = (bool) apply_filters( 'gutenberg_bento_self_host', false );
 
 		if ( $self_host ) {
-			$web_component_asset_file = GUTENBERG_BENTO_BLOCKS_ABSPATH . 'build/bento-base-socialshare.asset.php';
+			$web_component_asset_file = GUTENBERG_BENTO_BLOCKS_ABSPATH . 'build/bento-socialshare.asset.php';
 			$web_component_asset      = is_readable( $web_component_asset_file ) ? require $web_component_asset_file : array();
 			$web_component_version    = isset( $web_component_asset['version'] ) ? $web_component_asset['version'] : false;
 
 			$style = wp_styles()->query( self::BENTO_BASE_SOCIALSHARE_SCRIPT_HANDLE );
 			if ( $style ) {
-				$style->src = GUTENBERG_BENTO_BLOCKS_ABSPATH . 'build/bento-base-socialshare.css';
+				$style->src = GUTENBERG_BENTO_BLOCKS_ABSPATH . 'build/bento-socialshare.css';
 				$style->ver = $web_component_version;
 			}
 			$script = wp_scripts()->query( self::BENTO_BASE_SOCIALSHARE_SCRIPT_HANDLE );
 			if ( $script ) {
-				$script->src  = GUTENBERG_BENTO_BLOCKS_ABSPATH . 'build/socialshare/bento-base-socialshare.js';
+				$script->src  = GUTENBERG_BENTO_BLOCKS_ABSPATH . 'build/socialshare/bento-socialshare.js';
 				$script->ver  = $web_component_version;
 				$script->deps = array(); // bento.js runtime is not needed when self-hosting.
 			}
@@ -139,14 +139,11 @@ class SocialShare_Block_Type {
 	 * @return array Filtered tags.
 	 */
 	public function filter_kses_allowed_html( $tags ) {
-		$tags['bento-base-socialshare'] = array_merge(
-			isset( $tags['bento-base-socialshare'] ) ? $tags['bento-base-socialshare'] : array(),
+		$tags['bento-socialshare'] = array_merge(
+			isset( $tags['bento-socialshare'] ) ? $tags['bento-socialshare'] : array(),
 			array_fill_keys(
 				array(
-					'class',
-					'auto-advance',
-					'loop',
-					'snap',
+					'type',
 				),
 				true
 			)
