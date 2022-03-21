@@ -5,9 +5,8 @@ import edit from './edit';
 import save from './save';
 
 export const settings = {
-	metadata,
 	edit,
 	save,
 };
 
-registerBlockType( 'gutenberg-bento/socialshare', settings );
+registerBlockType(metadata.name, settings);
