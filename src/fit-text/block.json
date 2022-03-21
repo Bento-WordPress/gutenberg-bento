@@ -7,9 +7,13 @@
 	"keywords": ["text"],
 	"textdomain": "default",
 	"attributes": {
-		"fittedText": {
+		"content": {
 			"type": "string",
-			"default": ""
+			"source": "html",
+			"selector": "bento-fit-text",
+			"default": "",
+			"__unstablePreserveWhiteSpace": true,
+			"__experimentalRole": "content"
 		},
 		"minFontSize": {
 			"type": "string",
@@ -22,10 +26,13 @@
 		"height": {
 			"type": "number",
 			"default": 50
+		},
+		"textAlign": {
+			"type": "string"
 		}
 	},
 	"supports": {
-		"align": true
+		"align": ["full", "wide"]
 	},
 	"editorScript": "file:./fit-text.js",
 	"editorStyle": "file:./view.css",
