@@ -10,4 +10,4 @@ export const settings = {
 	save,
 };
 
-registerBlockType( 'gutenberg-bento/social-share', settings );
+registerBlockType('gutenberg-bento/social-share', settings);
