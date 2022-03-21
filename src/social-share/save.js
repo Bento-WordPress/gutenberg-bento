@@ -3,9 +3,15 @@
  */
 import { useBlockProps } from '@wordpress/block-editor';
 
-const Save = ({ attributes: { facebook, twitter } }) => {
+const Save = ({ attributes: { facebook, twitter, email } }) => {
 	return (
 		<div {...useBlockProps.save()}>
+			{email && (
+				<bento-social-share
+					type="email"
+					aria-label="Share via Email"
+				></bento-social-share>
+			)}
 			{facebook && (
 				<bento-social-share
 					type="facebook"

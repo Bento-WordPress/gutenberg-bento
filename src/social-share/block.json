@@ -7,6 +7,10 @@
 	"keywords": [ "social", "share", "social networks" ],
 	"textdomain": "default",
 	"attributes": {
+		"email": {
+			"type": "boolean",
+			"default": false
+		},
 		"facebook": {
 			"type": "boolean",
 			"default": false
