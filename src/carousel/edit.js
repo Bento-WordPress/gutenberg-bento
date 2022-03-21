@@ -216,6 +216,7 @@ function CarouselEdit(props) {
 						<br />
 						<a
 							target="_blank"
+							rel="noopener noreferrer"
 							href="https://github.com/WordPress/gutenberg/pull/39597"
 						>
 							https://github.com/WordPress/gutenberg/pull/39597
