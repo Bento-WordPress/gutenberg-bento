@@ -18,6 +18,7 @@
 		"@bentoproject/date-countdown": "1.2112231523.2",
 		"@bentoproject/fit-text": "1.2112231523.2",
 		"@bentoproject/lightbox-gallery": "1.2112231523.2",
+		"@bentoproject/social-share": "1.2112231523.2",
 		"@wordpress/blob": "^3.4.1",
 		"@wordpress/block-editor": "^8.3.1",
 		"@wordpress/blocks": "^11.3.1",
