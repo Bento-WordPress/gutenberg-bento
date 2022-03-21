@@ -32,6 +32,10 @@ Specifically:
 
 Uses [Bento Accordion](https://bentojs.dev/components/bento-accordion/) with `InnerBlocks`.
 
+<img width="1344" alt="Accordion in the Editor" src="https://user-images.githubusercontent.com/841956/159233337-0aa3641d-bd92-4d1b-8312-f61dedb0b7d9.png">
+
+<img width="774" alt="Accordion on the Frontend" src="https://user-images.githubusercontent.com/841956/159233382-e854d2aa-2c90-4f7a-94ae-fe69d9e626f8.png">
+
 ### Carousel Block
 
 Uses [Bento Carousel](https://bentojs.dev/components/bento-carousel/) with `InnerBlocks`.
