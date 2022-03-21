@@ -10,7 +10,7 @@ namespace Gutenberg_Bento;
 /**
  * Class SocialShare_Block_type
  */
-class SocialShare_Block_Type {
+class Social_Share_Block_Type {
 
 	const BENTO_BASE_SOCIALSHARE_SCRIPT_HANDLE = 'bento-social-share';
 	const BENTO_BASE_SOCIALSHARE_VERSION       = '1.0';
