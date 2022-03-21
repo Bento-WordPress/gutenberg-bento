@@ -184,7 +184,7 @@ function CarouselEdit(props) {
 	}
 
 	function initTheBlock() {
-		replaceInnerBlocks(clientId, [createBlock('core/group', {})]);
+		replaceInnerBlocks(clientId, [createBlock('core/cover', {})]);
 	}
 
 	const goToNextSlide = () => {
@@ -199,7 +199,7 @@ function CarouselEdit(props) {
 		}
 	};
 
-	// const blockProps = useBlockProps();
+	const blockProps = useBlockProps();
 
 	if (hasGutenbergPatch === false) {
 		return (
@@ -388,7 +388,7 @@ function CarouselEdit(props) {
 					/>
 				</ToolbarGroup>
 			</BlockControls>
-			<figure>
+			<figure {...blockProps}>
 				<div className="gutenberg-bento-carousel-wrapper">
 					<div {...innerBlocksProps} />
 				</div>
