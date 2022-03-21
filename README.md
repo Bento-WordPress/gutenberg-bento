@@ -114,4 +114,6 @@ This project was built during the [CloudFest 2022 Hackathon](https://www.cloudfe
 * [Héctor Prieto](https://github.com/priethor)
 * [Jessica Lyschik](https://github.com/luminuu)
 
+![IMG_2668](https://user-images.githubusercontent.com/83631/159237216-7df94356-2fc4-47ca-9b54-92df48e764db.jpg)
+
 It is based on an original early prototype built by [Pascal Birchler](https://github.com/swissspidy).
