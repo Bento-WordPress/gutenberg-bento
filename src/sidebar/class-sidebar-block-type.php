@@ -13,7 +13,7 @@ namespace Gutenberg_Bento;
 class Sidebar_Block_Type {
 
 	const BENTO_RUNTIME_SCRIPT_HANDLE = 'bento-runtime';
-	const BLOCK_VIEW_STYLE_HANDLE = 'gutenberg-bento-sidebar-view-style';
+	const BLOCK_VIEW_STYLE_HANDLE     = 'gutenberg-bento-sidebar-view-style';
 	const BENTO_SIDEBAR_SCRIPT_HANDLE = 'bento-sidebar';
 
 	/**
