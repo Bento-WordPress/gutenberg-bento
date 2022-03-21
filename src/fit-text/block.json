@@ -18,6 +18,10 @@
 		"maxFontSize": {
 			"type": "string",
 			"default": "400px"
+		},
+		"height": {
+			"type": "number",
+			"default": 200
 		}
 	},
 	"supports": {
@@ -25,5 +29,6 @@
 	},
 	"editorScript": "file:./fit-text.js",
 	"editorStyle": "file:./view.css",
-	"style": ["file:./view.css", "bento-fit-text"]
+	"style": ["file:./view.css", "bento-fit-text"],
+	"viewScript": "bento-fit-text"
 }

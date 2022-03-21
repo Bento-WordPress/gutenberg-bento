@@ -13,24 +13,32 @@
 	},
 	"homepage": "https://github.com/swissspidy/gutenberg-bento#readme",
 	"dependencies": {
-		"@bentoproject/accordion": "^1.2203041950.0",
+		"@bentoproject/accordion": "1.2112231523.2",
 		"@bentoproject/base-carousel": "1.2112231523.2",
+		"@bentoproject/date-countdown": "1.2112231523.2",
 		"@bentoproject/fit-text": "1.2112231523.2",
+		"@bentoproject/lightbox-gallery": "1.2112231523.2",
 		"@wordpress/blob": "^3.4.1",
 		"@wordpress/block-editor": "^8.3.1",
 		"@wordpress/blocks": "^11.3.1",
 		"@wordpress/components": "^19.6.1",
+		"@wordpress/compose": "^5.2.1",
 		"@wordpress/data": "^6.3.0",
 		"@wordpress/element": "^4.0.0",
 		"@wordpress/i18n": "^4.4.1",
-		"@wordpress/primitives": "^3.1.0"
+		"@wordpress/icons": "^8.0.1",
+		"@wordpress/primitives": "^3.1.0",
+		"lodash": "^4.17.21"
 	},
 	"devDependencies": {
 		"@wordpress/scripts": "^22.2.1"
 	},
 	"scripts": {
-		"build": "wp-scripts build",
+		"build": "npm run build:blocks && npm run build:lightbox-gallery",
+		"build:blocks": "wp-scripts build",
+		"build:lightbox-gallery": "npx wp-scripts build src/lightbox-gallery/lightbox-gallery.js --output-path=tmp && mkdir -p build/lightbox-gallery && cp tmp/lightbox-* build/lightbox-gallery/ && rm -rf tmp",
 		"format": "wp-scripts format",
+		"format:php": "composer format",
 		"lint:css": "wp-scripts lint-style",
 		"lint:js": "wp-scripts lint-js",
 		"lint:md:docs": "wp-scripts lint-md-docs",

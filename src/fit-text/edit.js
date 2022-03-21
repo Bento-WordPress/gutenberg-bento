@@ -8,25 +8,36 @@ import {
 	InspectorControls,
 } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
-import { PanelBody, __experimentalUnitControl as UnitControl, ResizableBox } from '@wordpress/components';
-import {useState} from "@wordpress/element";
+import {
+	PanelBody,
+	// eslint-disable-next-line @wordpress/no-unsafe-wp-apis
+	__experimentalUnitControl as UnitControl,
+	ResizableBox,
+} from '@wordpress/components';
+import { useState, useEffect } from '@wordpress/element';
+
+import './edit.css';
 
 function FitTextEdit(props) {
-	const { attributes } = props;
-	const { fittedText, minFontSize, maxFontSize } = attributes;
+	const { attributes, setAttributes } = props;
+	const { fittedText, minFontSize, maxFontSize, height = 200 } = attributes;
 
-	const [ height, setHeight ] = useState( 200 );
+	const [localHeight, setLocalHeight] = useState(height);
+
+	useEffect(() => {
+		setAttributes({ height: localHeight });
+	}, [localHeight]);
+
 	function setMinFontSize(fontSize) {
-		console.log( fontSize );
-		props.setAttributes( { minFontSize: fontSize } );
+		props.setAttributes({ minFontSize: fontSize });
 	}
 
 	function setMaxFontSize(fontSize) {
-		props.setAttributes( { maxFontSize: fontSize } );
+		props.setAttributes({ maxFontSize: fontSize });
 	}
 
 	function setFittedText(text) {
-		props.setAttributes( { fittedText: text } );
+		props.setAttributes({ fittedText: text });
 	}
 
 	const blockProps = useBlockProps();
@@ -37,45 +48,55 @@ function FitTextEdit(props) {
 				<PanelBody title={__('Fit-Text Settings', 'gutenberg-bento')}>
 					<UnitControl
 						label={__('Minimum Font Size', 'gutenberg-bento')}
-						onChange={ setMinFontSize }
+						onChange={setMinFontSize}
 						units={[
 							{
 								a11yLabel: 'Pixels (px)',
 								label: 'px',
 								step: 1,
-								value: 'px'
-							}
+								value: 'px',
+							},
 						]}
-						value={ minFontSize }
+						value={minFontSize}
 					/>
 					<UnitControl
 						label={__('Maximum Font Size', 'gutenberg-bento')}
-						onChange={ setMaxFontSize }
+						onChange={setMaxFontSize}
 						units={[
 							{
 								a11yLabel: 'Pixels (px)',
 								label: 'px',
 								step: 1,
-								value: 'px'
-							}
+								value: 'px',
+							},
 						]}
-						value={ maxFontSize }
+						value={maxFontSize}
 					/>
 				</PanelBody>
 			</InspectorControls>
-			<div { ...blockProps }>
+			<div {...blockProps}>
 				<ResizableBox
-					minHeight={ 200 }
-					enable={ { bottom: true, right: false }}
-					onResizeStop={ ( event, direction, elt, delta ) => {
-						setHeight( height + delta.height );
-					} }
+					minHeight={200}
+					enable={{ bottom: true, right: false }}
+					onResizeStop={(event, direction, elt, delta) => {
+						setLocalHeight(
+							(prevHeight) => prevHeight + delta.height
+						);
+					}}
 				>
-					<BentoFitText className="bento-fit-text" style={ { height: height } } minFontSize={ parseInt( minFontSize.replace( 'px', '' ), 10 ) } maxFontSize={ parseInt( maxFontSize.replace( 'px', '' ), 10 ) }>
-						<RichText
-							value={ fittedText }
-							onChange={ setFittedText }
-						/>
+					<BentoFitText
+						className="bento-fit-text"
+						style={{ height: localHeight }}
+						minFontSize={parseInt(
+							minFontSize.replace('px', ''),
+							10
+						)}
+						maxFontSize={parseInt(
+							maxFontSize.replace('px', ''),
+							10
+						)}
+					>
+						<RichText value={fittedText} onChange={setFittedText} />
 					</BentoFitText>
 				</ResizableBox>
 			</div>

@@ -2,10 +2,10 @@
 /**
  * Bent Fit Text component integration.
  *
- * @package   Google\Gutenberg_Bento
+ * @package   Gutenberg_Bento
  */
 
-namespace Google\Gutenberg_Bento;
+namespace Gutenberg_Bento;
 
 /**
  * Class Fit_Text_Block_type
@@ -18,7 +18,7 @@ class Fit_Text_Block_Type {
 
 	// @todo Maybe these should be obtained from block.json directly?
 	const BLOCK_STYLE_HANDLE       = 'gutenberg-bento-fit-text-style';
-	const BLOCK_VIEW_SCRIPT_HANDLE = 'gutenberg-bento-fit-text-view-script';
+	const BLOCK_VIEW_SCRIPT_HANDLE = 'gutenberg-bento-fit-text-script';
 
 	/**
 	 * Calls the initialization function.
@@ -48,15 +48,13 @@ class Fit_Text_Block_Type {
 	 * @return void
 	 */
 	public function register_bento_assets() {
-
-		$src    = sprintf( 'https://cdn.ampproject.org/v0/bento-fit-text-%s.js', self::BENTO_FIT_TEXT_VERSION );
-		$script = wp_scripts()->query( self::BENTO_FIT_TEXT_SCRIPT_HANDLE );
-		if ( $script ) {
-			// Make sure that 1.0 (Bento) is used instead of 0.1 (latest).
-			$script->src = $src;
-		} else {
-			wp_register_script( self::BENTO_FIT_TEXT_SCRIPT_HANDLE, $src, array( self::BENTO_RUNTIME_SCRIPT_HANDLE ), null, true );
-		}
+		wp_register_script(
+			self::BENTO_FIT_TEXT_SCRIPT_HANDLE,
+			sprintf( 'https://cdn.ampproject.org/v0/bento-fit-text-%s.js', self::BENTO_FIT_TEXT_VERSION ),
+			array( self::BENTO_RUNTIME_SCRIPT_HANDLE ),
+			null,
+			true
+		);
 
 		// At the moment the AMP plugin does not register styles for Bento components, but this could change with <https://github.com/ampproject/amp-wp/pull/6353>.
 		$src   = sprintf( 'https://cdn.ampproject.org/v0/bento-fit-text-%s.css', self::BENTO_FIT_TEXT_VERSION );
@@ -108,9 +106,7 @@ class Fit_Text_Block_Type {
 		$script = wp_scripts()->query( self::BLOCK_VIEW_SCRIPT_HANDLE );
 		if ( $script ) {
 			$script->deps = array_merge( $script->deps, array( self::BENTO_RUNTIME_SCRIPT_HANDLE, self::BENTO_FIT_TEXT_SCRIPT_HANDLE ) );
-			$script->args = 1;
 		}
-
 	}
 
 	/**
@@ -143,10 +139,8 @@ class Fit_Text_Block_Type {
 			isset( $tags['bento-fit-text'] ) ? $tags['bento-fit-text'] : array(),
 			array_fill_keys(
 				array(
-					'class',
-					'auto-advance',
-					'loop',
-					'snap',
+					'min-font-size',
+					'max-font-size',
 				),
 				true
 			)
