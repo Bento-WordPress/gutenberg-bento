@@ -12,10 +12,9 @@ export default function save( { attributes: { templatePartId } } ) {
 		<div
 			{ ...useInnerBlocksProps.save(
 				useBlockProps.save( {
-					animate: animate ? 'true' : undefined,
-					id,
 				} ),
-			) }>
+			) }
+		>
 			<button id={ `opener-${ uuid }` }>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
