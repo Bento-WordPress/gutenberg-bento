@@ -82,11 +82,12 @@ function CarouselEdit(props) {
 	);
 	const [hasGutenbergPatch, setHasGutenbergPatch] = useState(null);
 	useEffect(() => {
-		const target = document.createElement('div');
-		render(<div {...innerBlocksProps} />, target);
-		setTimeout(() => {
-			setHasGutenbergPatch(target.innerHTML.includes('class="carousel-'));
-		});
+		// This warning that the gutenberg patch isn't installed breaks the entire thing :(
+		// const target = document.createElement('div');
+		// render(<div {...innerBlocksProps} />, target);
+		// setTimeout(() => {
+		// 	setHasGutenbergPatch(target.innerHTML.includes('class="carousel-'));
+		// });
 	}, []);
 
 	const hasImages = innerBlocks.length > 0;
@@ -183,7 +184,7 @@ function CarouselEdit(props) {
 	}
 
 	function initTheBlock() {
-		replaceInnerBlocks(clientId, [createBlock('core/cover', {})]);
+		replaceInnerBlocks(clientId, [createBlock('core/group', {})]);
 	}
 
 	const goToNextSlide = () => {
@@ -198,7 +199,7 @@ function CarouselEdit(props) {
 		}
 	};
 
-	const blockProps = useBlockProps();
+	// const blockProps = useBlockProps();
 
 	if (hasGutenbergPatch === false) {
 		return (
@@ -387,7 +388,7 @@ function CarouselEdit(props) {
 					/>
 				</ToolbarGroup>
 			</BlockControls>
-			<figure {...blockProps}>
+			<figure>
 				<div className="gutenberg-bento-carousel-wrapper">
 					<div {...innerBlocksProps} />
 				</div>
