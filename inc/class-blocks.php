@@ -15,7 +15,7 @@ class Blocks {
 	const COMPONENTS = array(
 		GUTENBERG_BENTO_BLOCKS_ABSPATH . '/src/accordion/class-accordion-block-type.php' => Accordion_Block_Type::class,
 		GUTENBERG_BENTO_BLOCKS_ABSPATH . '/src/carousel/class-carousel-block-type.php' => Carousel_Block_Type::class,
-		GUTENBERG_BENTO_BLOCKS_ABSPATH . '/src/socialshare/class-socialshare-block-type.php' => SocialShare_Block_Type::class,
+		GUTENBERG_BENTO_BLOCKS_ABSPATH . '/src/social-share/class-social-share-block-type.php' => SocialShare_Block_Type::class,
 		GUTENBERG_BENTO_BLOCKS_ABSPATH . '/src/date-countdown/class-date-countdown-block-type.php' => Date_Countdown_Block_Type::class,
 		GUTENBERG_BENTO_BLOCKS_ABSPATH . '/src/fit-text/class-fit-text-block-type.php' => Fit_Text_Block_Type::class,
 		GUTENBERG_BENTO_BLOCKS_ABSPATH . '/src/lightbox-gallery/class-lightbox-gallery.php' => Lightbox_Gallery::class,

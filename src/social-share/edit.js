@@ -7,7 +7,7 @@ import { PanelBody, ToggleControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { BentoSocialShare } from '@bentoproject/social-share/react';
 import '@bentoproject/social-share/styles.css';
-import './socialshare.css';
+import './social-share.css';
 
 const Edit = ({ attributes: { facebook, twitter }, setAttributes }) => {
 	const toggleFacebook = useCallback((nextValue) => {
