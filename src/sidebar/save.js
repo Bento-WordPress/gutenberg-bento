@@ -6,16 +6,12 @@ import {
 	__experimentalUseEntityRecords as useEntityRecords,
 } from '@wordpress/core-data';
 
-export default function save( { attributes: { templatePartId } } ) {
-	const uuid = uuidv4();
+export default function save( { attributes: { templatePartId, side } } ) {
+	const openerId = `opener-${ templatePartId.replace( /\//g, '-' ) }-${ side }`;
 	return (
 		<div
-			{ ...useInnerBlocksProps.save(
-				useBlockProps.save( {
-				} ),
-			) }
 		>
-			<button id={ `opener-${ uuid }` }>
+			<button id={ openerId }>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					height="48px"
@@ -27,17 +23,13 @@ export default function save( { attributes: { templatePartId } } ) {
 					<path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
 				</svg>
 			</button>
-			<bento-sidebar id={ `sidebar-${ uuid }` } side="left" hidden
-										 data-opener-id={ `opener-${ uuid }` }>
-				<InnerBlocks.Content/>
-			</bento-sidebar>
+			<bento-sidebar
+				id={ `sidebar-${ openerId }` } side={ side } hidden
+				data-opener-id={ openerId }
+				{ ...useInnerBlocksProps.save(
+					useBlockProps.save( {} ),
+				) }
+			/>
 		</div>
-	);
-}
-
-// hack
-function uuidv4() {
-	return ( [1e7] + - 1e3 + - 4e3 + - 8e3 + - 1e11 ).replace( /[018]/g, c =>
-		( c ^ crypto.getRandomValues( new Uint8Array( 1 ) )[ 0 ] & 15 >> c / 4 ).toString( 16 ),
 	);
 }

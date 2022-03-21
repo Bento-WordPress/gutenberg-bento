@@ -23,7 +23,7 @@ const SIDEBAR_SECTION_BLOCK = 'gutenberg-bento/sidebar-section';
 const ALLOWED_BLOCKS = [SIDEBAR_SECTION_BLOCK];
 const TEMPLATE = [[SIDEBAR_SECTION_BLOCK]];
 
-export default function Edit( { clientId, attributes: { templatePartId }, setAttributes } ) {
+export default function Edit( { clientId, attributes: { templatePartId, side }, setAttributes } ) {
 	const blockProps = useBlockProps();
 
 	const { records: templateParts, status } = useEntityRecords( 'postType', 'wp_template_part' );
@@ -36,6 +36,10 @@ export default function Edit( { clientId, attributes: { templatePartId }, setAtt
 		[templateParts],
 	);
 
+	const innerBlocksProps = useInnerBlocksProps(
+		{},
+		{},
+	);
 	const [blocks, onInput, onChange] = useEntityBlockEditor(
 		'postType',
 		'wp_template_part',
@@ -49,7 +53,8 @@ export default function Edit( { clientId, attributes: { templatePartId }, setAtt
 			clientId,
 			blocks || [],
 		);
-	}, [blocks] );
+		console.log( "Inner blocks", blocks );
+	}, [blocks, templatePartId] );
 
 	return (
 		<>
@@ -70,8 +75,8 @@ export default function Edit( { clientId, attributes: { templatePartId }, setAtt
 			<BlockControls>
 				<ToolbarGroup className="wp-block-template-part__block-control-group">
 					<ToolbarDropdownMenu
-						label={ __( 'Select Template Part' ) }
-						text={ __( 'Select Template Part' ) }
+						label={ __( 'Select Template Part', 'gutenberg-bento' ) }
+						text={ __( 'Select Template Part', 'gutenberg-bento' ) }
 						icon={ null }
 					>
 						{ ( { onClose } ) => (
@@ -83,6 +88,29 @@ export default function Edit( { clientId, attributes: { templatePartId }, setAtt
 										onClose();
 									} }
 									choices={ choices }
+								/>
+							</MenuGroup>
+						) }
+					</ToolbarDropdownMenu>
+				</ToolbarGroup>
+				<ToolbarGroup className="wp-block-template-part__block-control-group">
+					<ToolbarDropdownMenu
+						label={ __( side === 'left' ? 'Left sidebar' : 'Right sidebar', 'gutenberg-bento' ) }
+						text={ __( side === 'left' ? 'Left sidebar' : 'Right sidebar', 'gutenberg-bento' ) }
+						icon={ null }
+					>
+						{ ( { onClose } ) => (
+							<MenuGroup>
+								<MenuItemsChoice
+									value={ side }
+									onSelect={ ( selectedValue ) => {
+										setAttributes( { side: selectedValue } );
+										onClose();
+									} }
+									choices={ [
+										{ label: __( 'Left sidebar', 'gutenberg-bento' ), value: 'left' },
+										{ label: __( 'Right sidebar', 'gutenberg-bento' ), value: 'right' },
+									] }
 								/>
 							</MenuGroup>
 						) }

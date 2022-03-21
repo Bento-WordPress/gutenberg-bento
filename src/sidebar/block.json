@@ -8,7 +8,11 @@
 	"textdomain": "gutenberg-bento",
 	"attributes": {
 		"templatePartId": {
-			"type": "number"
+			"type": "string"
+		},
+		"side": {
+			"type": "string",
+			"default": "left"
 		}
 	},
 	"supports": {
