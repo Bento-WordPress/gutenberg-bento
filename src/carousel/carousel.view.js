@@ -17,14 +17,15 @@ window.addEventListener(
 			);
 			const api = await bentoComponent.getApi();
 
+			// TODO: Probably remove, since right now we don't have custom buttons anymore.
 			carousel
 				.querySelector('.gutenberg-bento-carousel-buttons__prev')
-				.addEventListener('click', () => {
+				?.addEventListener('click', () => {
 					api.prev();
 				});
 			carousel
 				.querySelector('.gutenberg-bento-carousel-buttons__next')
-				.addEventListener('click', () => {
+				?.addEventListener('click', () => {
 					api.next();
 				});
 		}
