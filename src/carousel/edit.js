@@ -80,14 +80,14 @@ function CarouselEdit(props) {
 		},
 		[clientId]
 	);
-	const [ hasGutenbergPatch, setHasGutenbergPatch ] = useState(null);
-	useEffect( () => {
-		const target = document.createElement( 'div' );
-		render( <div { ...innerBlocksProps } />, target );
+	const [hasGutenbergPatch, setHasGutenbergPatch] = useState(null);
+	useEffect(() => {
+		const target = document.createElement('div');
+		render(<div {...innerBlocksProps} />, target);
 		setTimeout(() => {
-			setHasGutenbergPatch( target.innerHTML.includes( 'class="carousel-' ) );
-		})
-	}, [] );
+			setHasGutenbergPatch(target.innerHTML.includes('class="carousel-'));
+		});
+	}, []);
 
 	const hasImages = innerBlocks.length > 0;
 	const imagesIds = hasImages
@@ -210,17 +210,20 @@ function CarouselEdit(props) {
 					<legend className="components-placeholder__instructions">
 						{__(
 							'Using this component requires a patched Gutenberg version. Please ' +
-							'apply the following PR and retry: ',
+								'apply the following PR and retry: ',
 							'gutenberg-bento'
 						)}
-						<br/>
-						<a target="_blank" href="https://github.com/WordPress/gutenberg/pull/39597">
+						<br />
+						<a
+							target="_blank"
+							href="https://github.com/WordPress/gutenberg/pull/39597"
+						>
 							https://github.com/WordPress/gutenberg/pull/39597
 						</a>
 					</legend>
 				</fieldset>
 			</div>
-		)
+		);
 	}
 
 	if (!innerBlocks.length) {
