@@ -82,11 +82,12 @@ function CarouselEdit(props) {
 	);
 	const [hasGutenbergPatch, setHasGutenbergPatch] = useState(null);
 	useEffect(() => {
-		const target = document.createElement('div');
-		render(<div {...innerBlocksProps} />, target);
-		setTimeout(() => {
-			setHasGutenbergPatch(target.innerHTML.includes('class="carousel-'));
-		});
+		// This warning that the gutenberg patch isn't installed breaks the entire thing :(
+		// const target = document.createElement('div');
+		// render(<div {...innerBlocksProps} />, target);
+		// setTimeout(() => {
+		// 	setHasGutenbergPatch(target.innerHTML.includes('class="carousel-'));
+		// });
 	}, []);
 
 	const hasImages = innerBlocks.length > 0;

@@ -1,0 +1,24 @@
+{
+	"apiVersion": 2,
+	"name": "gutenberg-bento/sidebar",
+	"title": "Sidebar",
+	"category": "gutenberg-bento-blocks",
+	"description": "Displays content sections that can be collapsed and expanded.",
+	"keywords": ["sections"],
+	"textdomain": "gutenberg-bento",
+	"attributes": {
+		"templatePartId": {
+			"type": "string"
+		},
+		"side": {
+			"type": "string",
+			"default": "left"
+		}
+	},
+	"supports": {
+		"html": false
+	},
+	"editorStyle": "file:./index.css",
+	"editorScript": "file:./index.js",
+	"viewScript": "file:./view.js"
+}
