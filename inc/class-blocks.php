@@ -18,6 +18,7 @@ class Blocks {
 		GUTENBERG_BENTO_BLOCKS_ABSPATH . '/src/socialshare/class-socialshare-block-type.php' => SocialShare_Block_Type::class,
 		GUTENBERG_BENTO_BLOCKS_ABSPATH . '/src/date-countdown/class-date-countdown-block-type.php' => Date_Countdown_Block_Type::class,
 		GUTENBERG_BENTO_BLOCKS_ABSPATH . '/src/fit-text/class-fit-text-block-type.php' => Fit_Text_Block_Type::class,
+		GUTENBERG_BENTO_BLOCKS_ABSPATH . '/src/sidebar/class-sidebar-block-type.php' => Sidebar_Block_Type::class,
 		GUTENBERG_BENTO_BLOCKS_ABSPATH . '/src/lightbox-gallery/class-lightbox-gallery.php' => Lightbox_Gallery::class,
 	);
 
