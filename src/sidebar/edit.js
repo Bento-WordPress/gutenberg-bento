@@ -1,57 +1,32 @@
 import {
+	BlockControls,
 	InnerBlocks,
-	InspectorControls,
+	store as blockEditorStore,
 	useBlockProps,
 	useInnerBlocksProps,
-	BlockControls,
-	__experimentalUseNoRecursiveRenders as useNoRecursiveRenders,
-	Warning,
-	store as blockEditorStore,
 } from '@wordpress/block-editor';
-import { PanelBody, TextControl, ToggleControl } from '@wordpress/components';
-import { useCallback, useMemo } from '@wordpress/element';
-import { useSelect } from '@wordpress/data';
+import { useCallback, useEffect, useMemo } from '@wordpress/element';
+import { useDispatch } from '@wordpress/data';
 import {
-	ToolbarGroup,
-	ToolbarButton,
-	ToolbarDropdownMenu,
 	MenuGroup,
 	MenuItemsChoice,
-	Spinner,
-	Modal,
+	ToolbarDropdownMenu,
+	ToolbarGroup,
 } from '@wordpress/components';
-import { __, sprintf } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 import {
-	store as coreStore,
 	__experimentalUseEntityRecords as useEntityRecords,
+	useEntityBlockEditor,
 } from '@wordpress/core-data';
-import { useState } from '@wordpress/element';
-
-// import '@bentoproject/sidebar/styles.css';
 
 const SIDEBAR_SECTION_BLOCK = 'gutenberg-bento/sidebar-section';
 const ALLOWED_BLOCKS = [SIDEBAR_SECTION_BLOCK];
 const TEMPLATE = [[SIDEBAR_SECTION_BLOCK]];
 
-export default function Edit( { attributes: { templatePartId }, setAttributes } ) {
+export default function Edit( { clientId, attributes: { templatePartId }, setAttributes } ) {
 	const blockProps = useBlockProps();
-	const innerBlockProps = useInnerBlocksProps(
-		{},
-		{
-			allowedBlocks: ALLOWED_BLOCKS,
-			renderAppender: InnerBlocks.ButtonBlockAppender,
-			template: TEMPLATE,
-		},
-	);
-	const toggleAnimate = useCallback( ( nextValue ) => {
-		setAttributes( { animate: nextValue } );
-	}, [] );
 
 	const { records: templateParts, status } = useEntityRecords( 'postType', 'wp_template_part' );
-	useEffect( () => {
-		// const part = templateParts.find(({id})=>id === templatePartId);
-		// replaceInnerBlocks()
-	}, [templatePartId] );
 	const choices = useMemo(
 		() =>
 			templateParts?.map( ( { id, title } ) => ( {
@@ -60,6 +35,21 @@ export default function Edit( { attributes: { templatePartId }, setAttributes } 
 			} ) ),
 		[templateParts],
 	);
+
+	const [blocks, onInput, onChange] = useEntityBlockEditor(
+		'postType',
+		'wp_template_part',
+		{ id: templatePartId },
+	);
+
+	const { replaceInnerBlocks } = useDispatch( blockEditorStore );
+
+	useEffect( () => {
+		replaceInnerBlocks(
+			clientId,
+			blocks || [],
+		);
+	}, [blocks] );
 
 	return (
 		<>
