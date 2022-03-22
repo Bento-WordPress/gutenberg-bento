@@ -12,10 +12,10 @@ namespace Gutenberg_Bento;
  */
 class Accordion_Block_Type {
 
-	const BENTO_RUNTIME_SCRIPT_HANDLE = 'bento-runtime';
+	const BENTO_RUNTIME_SCRIPT_HANDLE   = 'bento-runtime';
 	const BENTO_ACCORDION_SCRIPT_HANDLE = 'bento-accordion';
-	const BENTO_ACCORDION_VERSION = '1.0';
-	const BLOCK_VIEW_STYLE_HANDLE     = 'gutenberg-bento-accordion-view-style';
+	const BENTO_ACCORDION_VERSION       = '1.0';
+	const BLOCK_VIEW_STYLE_HANDLE       = 'gutenberg-bento-accordion-view-style';
 
 	/**
 	 * Calls the initialization function.
@@ -43,15 +43,14 @@ class Accordion_Block_Type {
 	 *
 	 * @return void
 	 */
-	public function register_bento_assets()
-	{
+	public function register_bento_assets() {
 		wp_register_script(
 			self::BENTO_ACCORDION_SCRIPT_HANDLE,
 			sprintf(
 				'https://cdn.ampproject.org/v0/bento-accordion-%s.js',
 				self::BENTO_ACCORDION_VERSION
 			),
-			array(self::BENTO_RUNTIME_SCRIPT_HANDLE),
+			array( self::BENTO_RUNTIME_SCRIPT_HANDLE ),
 			null,
 			true
 		);
@@ -59,7 +58,7 @@ class Accordion_Block_Type {
 		// At the moment the AMP plugin does not register styles for Bento components, but this could change with <https://github.com/ampproject/amp-wp/pull/6353>.
 		wp_register_style(
 			self::BENTO_ACCORDION_SCRIPT_HANDLE,
-			sprintf('https://cdn.ampproject.org/v0/bento-accordion-%s.css', self::BENTO_ACCORDION_VERSION),
+			sprintf( 'https://cdn.ampproject.org/v0/bento-accordion-%s.css', self::BENTO_ACCORDION_VERSION ),
 			array(),
 			null,
 			false
