@@ -67,13 +67,13 @@ class Social_Share_Block_Type {
 		$self_host = (bool) apply_filters( 'gutenberg_bento_self_host', false );
 
 		if ( $self_host ) {
-			$web_component_asset_file = plugin_dir_path( __DIR__ ) . 'build/social-share/social-share.asset.php';
+			$web_component_asset_file = plugin_dir_path( __DIR__ ) . 'build/self-hosting/bento-social-share.asset.php';
 			$web_component_asset      = is_readable( $web_component_asset_file ) ? require $web_component_asset_file : array();
 			$web_component_version    = isset( $web_component_asset['version'] ) ? $web_component_asset['version'] : false;
 
-			$script = wp_scripts()->query( self::BENTO_DATE_COUNTDOWN_SCRIPT_HANDLE );
+			$script = wp_scripts()->query( self::BENTO_BASE_SOCIALSHARE_SCRIPT_HANDLE );
 			if ( $script ) {
-				$script->src  = plugin_dir_url( __DIR__ ) . 'build/social-share/social-share.js';
+				$script->src  = GUTENBERG_BENTO_BLOCKS_ASSETSURL . 'self-hosting/bento-social-share.js';
 				$script->ver  = $web_component_version;
 				$script->deps = array(); // bento.js runtime is not needed when self-hosting.
 			}
