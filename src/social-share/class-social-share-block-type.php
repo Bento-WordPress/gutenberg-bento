@@ -10,7 +10,7 @@ namespace Gutenberg_Bento;
 /**
  * Class SocialShare_Block_type
  */
-class SocialShare_Block_Type {
+class Social_Share_Block_Type {
 
 	const BENTO_BASE_SOCIALSHARE_SCRIPT_HANDLE = 'bento-social-share';
 	const BENTO_BASE_SOCIALSHARE_VERSION       = '1.0';
@@ -29,14 +29,14 @@ class SocialShare_Block_Type {
 	 */
 	protected function init_hooks() {
 		add_action( 'init', array( $this, 'register_bento_assets' ) );
-		add_action( 'init', array( $this, 'register_socialshare_block_type' ) );
+		add_action( 'init', array( $this, 'register_social_share_block_type' ) );
 		add_filter( 'wp_kses_allowed_html', array( $this, 'filter_kses_allowed_html' ) );
 	}
 
 	/**
 	 * Registers the scripts and styles for Bento components.
 	 *
-	 * Note that 'amp-runtime' and 'bento-socialshare' are scripts registered by the AMP plugin. The Bento versions aren't
+	 * Note that 'amp-runtime' and 'bento-social-share' are scripts registered by the AMP plugin. The Bento versions aren't
 	 * currently registered, so that is why this function needs to run currently on AMP pages.
 	 *
 	 * @return void
@@ -67,27 +67,26 @@ class SocialShare_Block_Type {
 		$self_host = (bool) apply_filters( 'gutenberg_bento_self_host', false );
 
 		if ( $self_host ) {
-			$web_component_asset_file = plugin_dir_path( __DIR__ ) . 'build/socialshare/socialshare.asset.php';
+			$web_component_asset_file = plugin_dir_path( __DIR__ ) . 'build/social-share/social-share.asset.php';
 			$web_component_asset      = is_readable( $web_component_asset_file ) ? require $web_component_asset_file : array();
 			$web_component_version    = isset( $web_component_asset['version'] ) ? $web_component_asset['version'] : false;
 
 			$script = wp_scripts()->query( self::BENTO_DATE_COUNTDOWN_SCRIPT_HANDLE );
 			if ( $script ) {
-				$script->src  = plugin_dir_url( __DIR__ ) . 'build/socialshare/socialshare.js';
+				$script->src  = plugin_dir_url( __DIR__ ) . 'build/social-share/social-share.js';
 				$script->ver  = $web_component_version;
 				$script->deps = array(); // bento.js runtime is not needed when self-hosting.
 			}
 		}
-
 	}
 
 	/**
-	 * Registers the socialshare block type.
+	 * Registers the social-share block type.
 	 *
 	 * @return void
 	 */
-	public function register_socialshare_block_type() {
-		register_block_type( GUTENBERG_BENTO_BLOCKS_ABSPATH . '/build/socialshare/block.json' );
+	public function register_social_share_block_type() {
+		register_block_type( GUTENBERG_BENTO_BLOCKS_ABSPATH . '/build/social-share/block.json' );
 	}
 
 	/**

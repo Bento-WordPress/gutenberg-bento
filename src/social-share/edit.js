@@ -7,9 +7,13 @@ import { PanelBody, ToggleControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { BentoSocialShare } from '@bentoproject/social-share/react';
 import '@bentoproject/social-share/styles.css';
-import './socialshare.css';
+import './social-share.css';
 
-const Edit = ({ attributes: { facebook, twitter }, setAttributes }) => {
+const Edit = ({ attributes: { facebook, twitter, email }, setAttributes }) => {
+	const toggleEmail = useCallback((nextValue) => {
+		setAttributes({ email: nextValue });
+	}, []);
+
 	const toggleFacebook = useCallback((nextValue) => {
 		setAttributes({ facebook: nextValue });
 	}, []);
@@ -23,6 +27,11 @@ const Edit = ({ attributes: { facebook, twitter }, setAttributes }) => {
 			<InspectorControls>
 				<PanelBody title={__('Settings', 'gutenberg-bento')}>
 					<ToggleControl
+						label={__('Email', 'gutenberg-bento')}
+						checked={email}
+						onChange={toggleEmail}
+					/>
+					<ToggleControl
 						label={__('Facebook', 'gutenberg-bento')}
 						checked={facebook}
 						onChange={toggleFacebook}
@@ -35,16 +44,22 @@ const Edit = ({ attributes: { facebook, twitter }, setAttributes }) => {
 				</PanelBody>
 			</InspectorControls>
 			<div {...useBlockProps()} className="social-share-group">
+				{email && (
+					<BentoSocialShare
+						type="email"
+						aria-label="Share via email"
+					></BentoSocialShare>
+				)}
 				{facebook && (
 					<BentoSocialShare
 						type="facebook"
-						aria-label="Share via email"
+						aria-label="Share via Facebook"
 					></BentoSocialShare>
 				)}
 				{twitter && (
 					<BentoSocialShare
 						type="twitter"
-						aria-label="Share via email"
+						aria-label="Share via Twitter"
 					></BentoSocialShare>
 				)}
 			</div>
