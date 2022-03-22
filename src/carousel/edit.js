@@ -8,6 +8,7 @@ import '@bentoproject/base-carousel/styles.css';
 /**
  * WordPress dependencies
  */
+// eslint-disable-next-line no-unused-vars
 import { useRef, render, useEffect, useState } from '@wordpress/element';
 import {
 	BlockControls,
@@ -80,6 +81,8 @@ function CarouselEdit(props) {
 		},
 		[clientId]
 	);
+
+	// eslint-disable-next-line no-unused-vars
 	const [hasGutenbergPatch, setHasGutenbergPatch] = useState(null);
 	useEffect(() => {
 		// This warning that the gutenberg patch isn't installed breaks the entire thing :(

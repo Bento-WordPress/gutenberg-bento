@@ -1,12 +1,7 @@
 /**
  * WordPress dependencies
  */
-import {
-	InnerBlocks,
-	useInnerBlocksProps,
-	useBlockProps,
-} from '@wordpress/block-editor';
-import { __experimentalUseEntityRecords as useEntityRecords } from '@wordpress/core-data';
+import { useInnerBlocksProps, useBlockProps } from '@wordpress/block-editor';
 
 export default function save({ attributes: { templatePartId, side } }) {
 	const openerId = `opener-${templatePartId.replace(/\//g, '-')}-${side}`;
