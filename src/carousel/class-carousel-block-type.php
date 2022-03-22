@@ -80,12 +80,12 @@ class Carousel_Block_Type {
 
 			$style = wp_styles()->query( self::BENTO_BASE_CAROUSEL_SCRIPT_HANDLE );
 			if ( $style ) {
-				$style->src = GUTENBERG_BENTO_BLOCKS_ABSPATH . 'build/bento-base-carousel.css';
+				$style->src = GUTENBERG_BENTO_BLOCKS_ASSETSURL . 'self-hosting/bento-base-carousel.css';
 				$style->ver = $web_component_version;
 			}
 			$script = wp_scripts()->query( self::BENTO_BASE_CAROUSEL_SCRIPT_HANDLE );
 			if ( $script ) {
-				$script->src  = GUTENBERG_BENTO_BLOCKS_ABSPATH . 'build/carousel/bento-base-carousel.js';
+				$script->src  = GUTENBERG_BENTO_BLOCKS_ASSETSURL . 'self-hosting/bento-base-carousel.js';
 				$script->ver  = $web_component_version;
 				$script->deps = array(); // bento.js runtime is not needed when self-hosting.
 			}

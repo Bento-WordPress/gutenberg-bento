@@ -70,19 +70,19 @@ class Lightbox_Gallery {
 		$self_host = (bool) apply_filters( 'gutenberg_bento_self_host', false );
 
 		if ( $self_host ) {
-			$web_component_asset_file = plugin_dir_path( __DIR__ ) . 'build/lightbox-gallery/lightbox-gallery.asset.php';
+			$web_component_asset_file = plugin_dir_path( __DIR__ ) . 'build/self-hosting/lightbox-gallery.asset.php';
 			$web_component_asset      = is_readable( $web_component_asset_file ) ? require $web_component_asset_file : array();
 			$web_component_version    = isset( $web_component_asset['version'] ) ? $web_component_asset['version'] : false;
 
 			$style = wp_styles()->query( self::BENTO_SCRIPT_HANDLE );
 			if ( $style ) {
-				$style->src = plugin_dir_url( __DIR__ ) . 'build/lightbox-gallery/bento-lightbox-gallery.css';
+				$style->src = GUTENBERG_BENTO_BLOCKS_ASSETSURL . 'self-hosting/bento-lightbox-gallery.css';
 				$style->ver = $web_component_version;
 			}
 
 			$script = wp_scripts()->query( self::BENTO_SCRIPT_HANDLE );
 			if ( $script ) {
-				$script->src  = plugin_dir_url( __DIR__ ) . 'build/lightbox-gallery/bento-lightbox-gallery.js';
+				$script->src  = GUTENBERG_BENTO_BLOCKS_ASSETSURL . 'self-hosting/bento-lightbox-gallery.js';
 				$script->ver  = $web_component_version;
 				$script->deps = array(); // bento.js runtime is not needed when self-hosting.
 			}

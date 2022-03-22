@@ -27,5 +27,6 @@
 	},
 	"editorStyle": "file:./index.css",
 	"editorScript": "file:./index.js",
-	"viewScript": "file:./view.js"
+	"viewScript": "bento-accordion",
+	"style": ["bento-accordion"]
 }

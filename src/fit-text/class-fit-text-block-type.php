@@ -75,18 +75,18 @@ class Fit_Text_Block_Type {
 		$self_host = (bool) apply_filters( 'gutenberg_bento_self_host', false );
 
 		if ( $self_host ) {
-			$web_component_asset_file = GUTENBERG_BENTO_BLOCKS_ABSPATH . 'build/bento-fit-text.asset.php';
+			$web_component_asset_file = GUTENBERG_BENTO_BLOCKS_ABSPATH . 'build/self-hosting/bento-fit-text.asset.php';
 			$web_component_asset      = is_readable( $web_component_asset_file ) ? require $web_component_asset_file : array();
 			$web_component_version    = isset( $web_component_asset['version'] ) ? $web_component_asset['version'] : false;
 
 			$style = wp_styles()->query( self::BENTO_FIT_TEXT_SCRIPT_HANDLE );
 			if ( $style ) {
-				$style->src = GUTENBERG_BENTO_BLOCKS_ABSPATH . 'build/bento-fit-text.css';
+				$style->src = GUTENBERG_BENTO_BLOCKS_ASSETSURL . 'self-hosting/bento-fit-text.css';
 				$style->ver = $web_component_version;
 			}
 			$script = wp_scripts()->query( self::BENTO_FIT_TEXT_SCRIPT_HANDLE );
 			if ( $script ) {
-				$script->src  = GUTENBERG_BENTO_BLOCKS_ABSPATH . 'build/fit-text/bento-fit-text.js';
+				$script->src  = GUTENBERG_BENTO_BLOCKS_ASSETSURL . 'self-hosting/bento-fit-text.js';
 				$script->ver  = $web_component_version;
 				$script->deps = array(); // bento.js runtime is not needed when self-hosting.
 			}
