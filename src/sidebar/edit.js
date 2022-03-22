@@ -23,42 +23,43 @@ const SIDEBAR_SECTION_BLOCK = 'gutenberg-bento/sidebar-section';
 const ALLOWED_BLOCKS = [SIDEBAR_SECTION_BLOCK];
 const TEMPLATE = [[SIDEBAR_SECTION_BLOCK]];
 
-export default function Edit( { clientId, attributes: { templatePartId, side }, setAttributes } ) {
+export default function Edit({
+	clientId,
+	attributes: { templatePartId, side },
+	setAttributes,
+}) {
 	const blockProps = useBlockProps();
 
-	const { records: templateParts, status } = useEntityRecords( 'postType', 'wp_template_part' );
+	const { records: templateParts, status } = useEntityRecords(
+		'postType',
+		'wp_template_part'
+	);
 	const choices = useMemo(
 		() =>
-			templateParts?.map( ( { id, title } ) => ( {
+			templateParts?.map(({ id, title }) => ({
 				label: title?.rendered,
 				value: id,
-			} ) ),
-		[templateParts],
+			})),
+		[templateParts]
 	);
 
-	const innerBlocksProps = useInnerBlocksProps(
-		{},
-		{},
-	);
+	const innerBlocksProps = useInnerBlocksProps({}, {});
 	const [blocks, onInput, onChange] = useEntityBlockEditor(
 		'postType',
 		'wp_template_part',
-		{ id: templatePartId },
+		{ id: templatePartId }
 	);
 
-	const { replaceInnerBlocks } = useDispatch( blockEditorStore );
+	const { replaceInnerBlocks } = useDispatch(blockEditorStore);
 
-	useEffect( () => {
-		replaceInnerBlocks(
-			clientId,
-			blocks || [],
-		);
-		console.log( "Inner blocks", blocks );
-	}, [blocks, templatePartId] );
+	useEffect(() => {
+		replaceInnerBlocks(clientId, blocks || []);
+		console.log('Inner blocks', blocks);
+	}, [blocks, templatePartId]);
 
 	return (
 		<>
-			<div { ...blockProps }>
+			<div {...blockProps}>
 				<button id="open-sidebar">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -67,53 +68,73 @@ export default function Edit( { clientId, attributes: { templatePartId, side }, 
 						width="48px"
 						fill="#000000"
 					>
-						<path d="M0 0h24v24H0V0z" fill="none"/>
-						<path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+						<path d="M0 0h24v24H0V0z" fill="none" />
+						<path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
 					</svg>
 				</button>
 			</div>
 			<BlockControls>
 				<ToolbarGroup className="wp-block-template-part__block-control-group">
 					<ToolbarDropdownMenu
-						label={ __( 'Select Template Part', 'gutenberg-bento' ) }
-						text={ __( 'Select Template Part', 'gutenberg-bento' ) }
-						icon={ null }
+						label={__('Select Template Part', 'gutenberg-bento')}
+						text={__('Select Template Part', 'gutenberg-bento')}
+						icon={null}
 					>
-						{ ( { onClose } ) => (
+						{({ onClose }) => (
 							<MenuGroup>
 								<MenuItemsChoice
-									value={ templatePartId }
-									onSelect={ ( selectedValue ) => {
-										setAttributes( { templatePartId: selectedValue } );
+									value={templatePartId}
+									onSelect={(selectedValue) => {
+										setAttributes({
+											templatePartId: selectedValue,
+										});
 										onClose();
-									} }
-									choices={ choices }
+									}}
+									choices={choices}
 								/>
 							</MenuGroup>
-						) }
+						)}
 					</ToolbarDropdownMenu>
 				</ToolbarGroup>
 				<ToolbarGroup className="wp-block-template-part__block-control-group">
 					<ToolbarDropdownMenu
-						label={ __( side === 'left' ? 'Left sidebar' : 'Right sidebar', 'gutenberg-bento' ) }
-						text={ __( side === 'left' ? 'Left sidebar' : 'Right sidebar', 'gutenberg-bento' ) }
-						icon={ null }
+						label={__(
+							side === 'left' ? 'Left sidebar' : 'Right sidebar',
+							'gutenberg-bento'
+						)}
+						text={__(
+							side === 'left' ? 'Left sidebar' : 'Right sidebar',
+							'gutenberg-bento'
+						)}
+						icon={null}
 					>
-						{ ( { onClose } ) => (
+						{({ onClose }) => (
 							<MenuGroup>
 								<MenuItemsChoice
-									value={ side }
-									onSelect={ ( selectedValue ) => {
-										setAttributes( { side: selectedValue } );
+									value={side}
+									onSelect={(selectedValue) => {
+										setAttributes({ side: selectedValue });
 										onClose();
-									} }
-									choices={ [
-										{ label: __( 'Left sidebar', 'gutenberg-bento' ), value: 'left' },
-										{ label: __( 'Right sidebar', 'gutenberg-bento' ), value: 'right' },
-									] }
+									}}
+									choices={[
+										{
+											label: __(
+												'Left sidebar',
+												'gutenberg-bento'
+											),
+											value: 'left',
+										},
+										{
+											label: __(
+												'Right sidebar',
+												'gutenberg-bento'
+											),
+											value: 'right',
+										},
+									]}
 								/>
 							</MenuGroup>
-						) }
+						)}
 					</ToolbarDropdownMenu>
 				</ToolbarGroup>
 			</BlockControls>
