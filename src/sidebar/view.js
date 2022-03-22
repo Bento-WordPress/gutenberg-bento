@@ -1,7 +1,7 @@
 window.addEventListener(
 	'load',
 	async () => {
-		await customElements.whenDefined('bento-sidebar');
+		await window.customElements.whenDefined('bento-sidebar');
 
 		const sidebars = document.querySelectorAll('bento-sidebar');
 		for (const sidebar of sidebars) {

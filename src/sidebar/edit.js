@@ -1,11 +1,9 @@
 import {
 	BlockControls,
-	InnerBlocks,
 	store as blockEditorStore,
 	useBlockProps,
-	useInnerBlocksProps,
 } from '@wordpress/block-editor';
-import { useCallback, useEffect, useMemo } from '@wordpress/element';
+import { useEffect, useMemo } from '@wordpress/element';
 import { useDispatch } from '@wordpress/data';
 import {
 	MenuGroup,
@@ -15,13 +13,10 @@ import {
 } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import {
+	// eslint-disable-next-line @wordpress/no-unsafe-wp-apis
 	__experimentalUseEntityRecords as useEntityRecords,
 	useEntityBlockEditor,
 } from '@wordpress/core-data';
-
-const SIDEBAR_SECTION_BLOCK = 'gutenberg-bento/sidebar-section';
-const ALLOWED_BLOCKS = [SIDEBAR_SECTION_BLOCK];
-const TEMPLATE = [[SIDEBAR_SECTION_BLOCK]];
 
 export default function Edit({
 	clientId,
@@ -30,7 +25,7 @@ export default function Edit({
 }) {
 	const blockProps = useBlockProps();
 
-	const { records: templateParts, status } = useEntityRecords(
+	const { records: templateParts } = useEntityRecords(
 		'postType',
 		'wp_template_part'
 	);
@@ -43,18 +38,14 @@ export default function Edit({
 		[templateParts]
 	);
 
-	const innerBlocksProps = useInnerBlocksProps({}, {});
-	const [blocks, onInput, onChange] = useEntityBlockEditor(
-		'postType',
-		'wp_template_part',
-		{ id: templatePartId }
-	);
+	const [blocks] = useEntityBlockEditor('postType', 'wp_template_part', {
+		id: templatePartId,
+	});
 
 	const { replaceInnerBlocks } = useDispatch(blockEditorStore);
 
 	useEffect(() => {
 		replaceInnerBlocks(clientId, blocks || []);
-		console.log('Inner blocks', blocks);
 	}, [blocks, templatePartId]);
 
 	return (
@@ -98,14 +89,16 @@ export default function Edit({
 				</ToolbarGroup>
 				<ToolbarGroup className="wp-block-template-part__block-control-group">
 					<ToolbarDropdownMenu
-						label={__(
-							side === 'left' ? 'Left sidebar' : 'Right sidebar',
-							'gutenberg-bento'
-						)}
-						text={__(
-							side === 'left' ? 'Left sidebar' : 'Right sidebar',
-							'gutenberg-bento'
-						)}
+						label={
+							side === 'left'
+								? __('Left sidebar', 'gutenberg-bento')
+								: __('Right sidebar', 'gutenberg-bento')
+						}
+						text={
+							side === 'left'
+								? __('Left sidebar', 'gutenberg-bento')
+								: __('Right sidebar', 'gutenberg-bento')
+						}
 						icon={null}
 					>
 						{({ onClose }) => (
