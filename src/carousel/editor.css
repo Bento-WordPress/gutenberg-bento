@@ -12,9 +12,12 @@
 
  Let's disable it:
  */
+
+/* stylelint-disable selector-class-pattern -- Work around https://github.com/WordPress/gutenberg/issues/28616 */
 .gutenberg-bento-carousel-wrapper > .block-editor-block-list__layout > [class^="carousel-"] {
 	contain: content !important;
 }
+/* stylelint-enable selector-class-pattern */
 
 /*
  Now the carousel is unconstrained in terms of height. Let's use
