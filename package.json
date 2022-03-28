@@ -22,7 +22,7 @@
 		"@bentoproject/social-share": "1.2112231523.2",
 		"@wordpress/blob": "^3.4.1",
 		"@wordpress/block-editor": "^8.3.1",
-		"@wordpress/blocks": "^11.3.1",
+		"@wordpress/blocks": "^11.4.0",
 		"@wordpress/components": "^19.6.1",
 		"@wordpress/compose": "^5.2.1",
 		"@wordpress/core-data": "^4.2.1",
