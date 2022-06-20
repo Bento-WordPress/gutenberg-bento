@@ -25,7 +25,7 @@
 		"@wordpress/blocks": "^11.3.1",
 		"@wordpress/components": "^19.7.0",
 		"@wordpress/compose": "^5.4.0",
-		"@wordpress/core-data": "^4.4.1",
+		"@wordpress/core-data": "^4.9.0",
 		"@wordpress/data": "^6.7.0",
 		"@wordpress/element": "^4.0.0",
 		"@wordpress/i18n": "^4.7.0",
