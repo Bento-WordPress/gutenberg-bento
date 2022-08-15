@@ -20,7 +20,7 @@
 		"@bentoproject/lightbox-gallery": "1.2112231523.2",
 		"@bentoproject/sidebar": "1.2112231523.2",
 		"@bentoproject/social-share": "1.2112231523.2",
-		"@wordpress/blob": "^3.6.0",
+		"@wordpress/blob": "^3.15.0",
 		"@wordpress/block-editor": "^8.5.1",
 		"@wordpress/blocks": "^11.3.1",
 		"@wordpress/components": "^19.7.0",
