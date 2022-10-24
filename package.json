@@ -35,7 +35,7 @@
 		"lodash": "^4.17.21"
 	},
 	"devDependencies": {
-		"@wordpress/scripts": "^22.4.0"
+		"@wordpress/scripts": "^24.4.0"
 	},
 	"scripts": {
 		"build": "npm run build:blocks && npm run build:self-hosting && npm run build:lightbox-gallery && npm run build:copy-tmp-files",
